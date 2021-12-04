@@ -1,9 +1,10 @@
 class Submarine
-  attr_reader :depth, :horizontal_position
+  attr_reader :depth, :horizontal_position, :aim
 
-  def initialize(depth: 0, horizontal_position: 0)
+  def initialize(depth: 0, horizontal_position: 0, aim: 0)
     @depth = depth
     @horizontal_position = horizontal_position
+    @aim = aim
   end
 
   def process_command(command, arg)
@@ -27,14 +28,15 @@ class Submarine
 
   def forward(n)
     @horizontal_position += n
+    @depth += @aim * n
   end
 
   def up(n)
-    @depth -= n
+    @aim -= n
   end
 
   def down(n)
-    @depth += n
+    @aim += n
   end
 
 end
@@ -52,6 +54,8 @@ class SubCommander
   end
 end
 
-commands = File.readlines('submarine_input.txt', chomp: true)
+if __FILE__ == $PROGRAM_NAME
+  commands = File.readlines('submarine_input.txt', chomp: true)
 
-puts "Submarine is at #{SubCommander.process(commands)}"
+  puts "Submarine is at #{SubCommander.process(commands)}"
+end
