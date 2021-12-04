@@ -1,4 +1,4 @@
-readings = File.read('2021_01_sonar_sweep.txt').split("\n")
+readings = File.read('sonar_sweep_input.txt').split("\n")
 
 def solve_puzzle1(readings)
   last_reading = readings.first
@@ -28,4 +28,5 @@ def solve_puzzle2(readings)
 
   puts count
 end
+
 solve_puzzle2(readings)
