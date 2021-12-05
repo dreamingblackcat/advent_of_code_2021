@@ -46,4 +46,31 @@ describe SubmarineDiagnostic do
       "Should return correct epsilon rate.")
   end
 
+  it 'calculates oxygen geneator rating' do
+    diagnostic = SubmarineDiagnostic.new(@report)
+
+    assert_equal('10111', diagnostic.oxygen_generator_rating_binary,
+      "Should return correct oxygen geneator rating in binary string.")
+
+    assert_equal(23, diagnostic.oxygen_generator_rating_decimal,
+      "Should return correct oxygen geneator rating in decimal.")
+  end
+
+  it 'calculates co2 scrubber rating' do
+    diagnostic = SubmarineDiagnostic.new(@report)
+
+    assert_equal('01010', diagnostic.co2_scrubber_rating_binary,
+      "Should return correct co2 scrubber rating in binary string.")
+
+    assert_equal(10, diagnostic.co2_scrubber_rating_decimal,
+      "Should return correct co2 scrubber rating in decimal.")
+  end
+
+  it 'calculates life support rating' do
+    diagnostic = SubmarineDiagnostic.new(@report)
+
+    assert_equal(230, diagnostic.life_support_rating,
+      "Should return correct life support rating.")
+  end
+
 end
