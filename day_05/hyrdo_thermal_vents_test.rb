@@ -32,6 +32,32 @@ describe PointRange do
     assert_equal(expected_points, point_range.points,
       "Should give correct points")
   end
+
+  it 'enumerates points on a given range (upper diagonal)' do
+    point_range = PointRange.new(Point.new(9, 7), Point.new(7, 9))
+
+    expected_points = [
+      Point.new(7, 9),
+      Point.new(8, 8),
+      Point.new(9, 7),
+    ]
+
+    assert_equal(expected_points, point_range.points,
+      "Should give correct points")
+  end
+
+  it 'enumerates points on a given range (lower diagonal)' do
+    point_range = PointRange.new(Point.new(5, 1), Point.new(7, 3))
+
+    expected_points = [
+      Point.new(5, 1),
+      Point.new(6, 2),
+      Point.new(7, 3),
+    ]
+
+    assert_equal(expected_points, point_range.points,
+      "Should give correct points")
+  end
 end
 
 
@@ -69,23 +95,6 @@ describe 'ThermalVentDetector' do
     assert_equal(3, detector.dangerous_points.length,
       "Should only have 3 dangerours points.")
   end
-
-  it 'ignores point ranges that are neither horizontal nor vertical.' do
-    horizonal_line_vent = PointRange.new(Point.new(0,9), Point.new(5,9))
-    vertical_line_vent  = PointRange.new(Point.new(0,7), Point.new(0,9))
-    non_horizontal_nor_vertical  = PointRange.new(Point.new(0,5), Point.new(4,9))
-
-    detector = ThermalVentDetector.new
-    detector.add_thermal_vent(horizonal_line_vent)
-    detector.add_thermal_vent(vertical_line_vent)
-
-    marked_points_so_far = detector.marked_points
-
-    detector.add_thermal_vent(non_horizontal_nor_vertical)
-
-    assert_equal(marked_points_so_far, detector.marked_points,
-      "Should still have same old marked_points without adding new ones.")
-  end
 end
 
 describe 'ThermalVentReport' do
@@ -103,7 +112,7 @@ describe 'ThermalVentReport' do
   it 'can find dangerous points' do
     report = ThermalVentReport.new('sample_test_input.txt')
 
-    assert_equal(5, report.dangerous_points.length,
+    assert_equal(12, report.dangerous_points.length,
       "Should have detected 5 dangerous points.")
   end
 end

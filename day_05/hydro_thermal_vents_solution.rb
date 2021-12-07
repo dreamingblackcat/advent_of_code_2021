@@ -25,7 +25,25 @@ class PointRange
         Point.new(x, @point1.y)
       end
     else
-      []
+      x1 = @point1.x
+      x2 = @point2.x
+      y1 = @point1.y
+      y2 = @point2.y
+      points = []
+      if lower_diagonal?
+        while x1 <= x2 && y1 <= y2 do
+          points << Point.new(x1, y1)
+          x1 += 1
+          y1 += 1
+        end
+      else
+        while x1 <= x2 && y1 >= y2 do
+          points << Point.new(x1, y1)
+          x1 += 1
+          y1 -= 1
+        end
+      end
+      points
     end
   end
 
@@ -39,8 +57,16 @@ class PointRange
     @point1.y == @point2.y
   end
 
-  def unsupported_line_segment?
+  def diagonal_line?
     !vertical_line? && !horizontal_line?
+  end
+
+  def lower_diagonal?
+    @point1.y < @point2.y
+  end
+
+  def upper_diagonal?
+    @point1.y > @point2.y
   end
 
   def normalize_points(points)
@@ -91,7 +117,6 @@ class ThermalVentReport
     @thermal_vent_detector.dangerous_points
   end
 end
-
 
 
 if __FILE__ == $PROGRAM_NAME
