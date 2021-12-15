@@ -25,13 +25,13 @@ describe EscapePlan2 do
     plan = EscapePlan2.new([16,1,2,0,4,2,7,1,2,14])
 
     assert_equal(5, plan.optimal_position,
-      "Should be set to 2")
+      "Should be set to 5")
   end
 
   it 'calculates fuel cost for optimum position.' do
     plan = EscapePlan2.new([16,1,2,0,4,2,7,1,2,14])
 
     assert_equal(168, plan.optimal_fuel_cost,
-      "Should be calculated to 37")
+      "Should be calculated to 168")
   end
 end
