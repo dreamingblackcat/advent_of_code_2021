@@ -38,16 +38,84 @@ describe SingleDigitDisplay do
     assert_equal([], display.guess_digits_by_length('dabcefgh'),
                  'Should return [] because no digit has 8 wires.')
   end
+
 end
 
 describe 'WireMechanic' do
-  it 'can calculate correct wiring based on signal observation.' do
+  before do
+    signal_observations = %w(acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab)
+    output_values = %w(cdfeb fcadb cdfeb cdbaf)
+    @mechanic = WireMechanic.new(signal_observations, output_values)
+  end
+
+  it 'can count unique digits in the ouptut.' do
     signal_observations = %w(be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb)
     output_values = %w(fdgacbe cefdb cefbgd gcbe)
-
     mechanic = WireMechanic.new(signal_observations, output_values)
 
     assert_equal(2, mechanic.count_easy_digit_outputs,
       "Should return correct original wiring.")
+  end
+
+  it "can guess which wire should map to a wire" do
+    a_wire = @mechanic.find_a
+    assert_equal('d', a_wire,
+      "Should correctly map d to a_wire")
+  end
+
+  it "can guess which wire should map to d & g wires" do
+    dg_wires = @mechanic.find_dg
+    assert_equal(['c', 'f'], dg_wires,
+      "Should correctly map to c and f")
+  end
+
+  it "can guess which wire should map to b & d wires" do
+    bd_wires = @mechanic.find_bd
+    assert_equal(['e', 'f'], bd_wires,
+      "Should correctly map to e and f")
+  end
+
+  it "can guess which wire should map to d wire" do
+    d_wire = @mechanic.find_d
+    assert_equal('f', d_wire,
+      "Should correctly map to f")
+  end
+
+  it "can guess which wire should map to g wire" do
+    g_wire = @mechanic.find_g
+    assert_equal('c', g_wire,
+      "Should correctly map to c")
+  end
+
+  it "can guess which wire should map to b wire" do
+    b_wire = @mechanic.find_b
+    assert_equal('e', b_wire,
+      "Should correctly map to e")
+  end
+
+  it "can guess which wire should map to f wire" do
+    f_wire = @mechanic.find_f
+    assert_equal('b', f_wire,
+      "Should correctly map to b")
+  end
+
+  it "can guess which wire should map to c wire" do
+    c_wire = @mechanic.find_c
+    assert_equal('a', c_wire,
+      "Should correctly map to a")
+  end
+
+  it "can guess which wire should map to c wire" do
+    e_wire = @mechanic.find_e
+    assert_equal('g', e_wire,
+      "Should correctly map to g")
+  end
+
+  it 'can decode a signal for unique digit' do
+    signal_observations = %w(acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab)
+    output_values = %w(cdfeb fcadb cdfeb cdbaf)
+    @mechanic = WireMechanic.new(signal_observations, output_values)
+    assert_equal(5353, @mechanic.decode,
+      "Should be able to decode correct output value.")
   end
 end
